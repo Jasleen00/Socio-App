@@ -193,6 +193,202 @@ const INITIAL_SEED_LEADS = [
   }
 ];
 
+// Helper: Live calculations for lead data
+const calculateLeadMetrics = (data) => {
+  let websitePoints = 0;
+  let ratingPoints = 0;
+  let socialPoints = 0;
+  let whatsappPoints = 0;
+
+  // 1. Website Status & Link Points (Max 30)
+  if (data.websiteStatus === 'none' || !data.websiteLink || data.websiteLink.trim() === '') {
+    websitePoints = 30; // Maximum opportunity metric
+  } else {
+    if (data.websiteStatus === 'poor') {
+      websitePoints = 15;
+    }
+    // If website link is present but is not HTTPS, add extra opportunity weight (+5 points)
+    if (data.websiteLink && !data.websiteLink.toLowerCase().startsWith('https://')) {
+      websitePoints = Math.min(30, websitePoints + 8);
+    }
+  }
+
+  // 2. Google Rating & Maps Link Points (Max 25)
+  let googleMapsPoints = 0;
+  if (!data.googleMapsLink || data.googleMapsLink.trim() === '') {
+    googleMapsPoints = 15;
+  }
+  
+  const rating = parseFloat(data.googleRating) || 0;
+  if (rating > 0) {
+    if (rating < 3.5) {
+      ratingPoints = 10;
+    } else if (rating < 4.2) {
+      ratingPoints = 6;
+    } else if (rating < 4.6) {
+      ratingPoints = 3;
+    }
+  } else {
+    ratingPoints = 10; // no reviews
+  }
+  const totalMapsAndRating = Math.min(25, googleMapsPoints + ratingPoints);
+
+  // 3. Instagram Presence & Notes Keyword Audit (Max 25)
+  const notesLower = (data.notes || '').toLowerCase();
+  let hasPoorSocial = false;
+  
+  if (!data.instagramLink || data.instagramLink.trim() === '') {
+    socialPoints = 20;
+  } else {
+    const socialFailureKeywords = [
+      'inactive', 'no posts', 'quiet', 'rarely post', 'abandoned',
+      'no stories', 'old posts', 'month ago', 'months ago', 'weeks ago',
+      'stale feed', 'outdated feed'
+    ];
+    hasPoorSocial = socialFailureKeywords.some(kw => notesLower.includes(kw));
+    
+    if (hasPoorSocial) {
+      socialPoints = 12;
+    } else {
+      socialPoints = 4;
+    }
+  }
+  
+  // Scan notes for extra design audit deductions (max 25 total)
+  const auditKeywords = [
+    { word: 'slow', pts: 3 },
+    { word: 'speed', pts: 3 },
+    { word: 'broken', pts: 4 },
+    { word: 'unsecured', pts: 4 },
+    { word: 'http', pts: 3 },
+    { word: 'not secure', pts: 4 },
+    { word: 'no cta', pts: 3 },
+    { word: 'logo', pts: 2 },
+    { word: 'unresponsive', pts: 4 },
+    { word: 'mobile issues', pts: 3 },
+    { word: 'outdated', pts: 3 }
+  ];
+  
+  let noteAuditAdditions = 0;
+  auditKeywords.forEach(item => {
+    if (notesLower.includes(item.word)) {
+      noteAuditAdditions += item.pts;
+    }
+  });
+
+  socialPoints = Math.min(25, socialPoints + noteAuditAdditions);
+
+  // 4. WhatsApp / Phone Availability & setup (Max 20)
+  if (!data.phone || data.phone.trim() === '') {
+    whatsappPoints = 15;
+  } else {
+    if (!data.isWhatsAppAvailable) {
+      whatsappPoints = 10;
+    } else {
+      whatsappPoints = 3;
+    }
+    
+    // Check for valid phone number length
+    const digitOnlyLength = data.phone.replace(/[^0-9]/g, '').length;
+    if (digitOnlyLength > 0 && digitOnlyLength < 8) {
+      whatsappPoints = Math.min(20, whatsappPoints + 7);
+    }
+  }
+
+  // Total Clamped Score (0 - 100)
+  const score = Math.min(100, Math.max(0, websitePoints + totalMapsAndRating + socialPoints + whatsappPoints));
+
+  // Priority Status placement
+  let priority = 'Cold';
+  if (score >= 70) priority = 'Hot';
+  else if (score >= 40) priority = 'Warm';
+
+  // Tailored pitch recommendation
+  let recommendedService = 'Full-Suite Local Expansion Setup';
+  if (data.websiteStatus === 'none' || !data.websiteLink || data.websiteLink.trim() === '') {
+    recommendedService = 'Premium Web Development & Conversion Funnel Setup';
+  } else if (data.websiteStatus === 'poor' || notesLower.includes('slow') || notesLower.includes('speed')) {
+    recommendedService = 'Vite-React Speed Redesign & SEO Overhaul';
+  } else if (!data.instagramLink || data.instagramLink.trim() === '' || hasPoorSocial) {
+    recommendedService = 'Social Media Marketing & Instagram Growth Retainer';
+  } else if (!data.googleMapsLink || data.googleMapsLink.trim() === '' || rating < 4.2) {
+    recommendedService = 'Google Maps GMB Listing & Reputation Management';
+  } else if (!data.isWhatsAppAvailable) {
+    recommendedService = 'WhatsApp Automation & CRM Pipeline Setup';
+  }
+
+  // Fetch localized config parameters
+  const matchedCountry = COUNTRIES.find(c => c.name === data.country) || COUNTRIES[0];
+  const greeting = matchedCountry.greeting;
+  const countryNotes = matchedCountry.marketPhrase;
+
+  // Set up category details
+  let categoryTarget = 'businesses';
+  if (data.category === 'Cafe') categoryTarget = 'Cafe & Restaurant brands';
+  else if (data.category === 'Gym') categoryTarget = 'Fitness Gyms and Athletic centers';
+  else if (data.category === 'Retail') categoryTarget = 'Boutique Retail stores';
+  else if (data.category === 'Real Estate') categoryTarget = 'Real Estate Brokerages';
+  else if (data.category === 'E-commerce') categoryTarget = 'Direct-to-Consumer e-commerce brands';
+  else if (data.category === 'Local Service') categoryTarget = 'Local service agencies';
+
+  // Set up gap description
+  let gapDescription = '';
+  if (data.websiteStatus === 'none' || !data.websiteLink || data.websiteLink.trim() === '') {
+    gapDescription = 'not having an online web presence';
+  } else if (data.websiteLink && !data.websiteLink.toLowerCase().startsWith('https://')) {
+    gapDescription = 'running an unsecured non-HTTPS website domain';
+  } else if (data.websiteStatus === 'poor') {
+    gapDescription = 'a slow-loading, unoptimized website layout';
+  } else if (!data.instagramLink || data.instagramLink.trim() === '') {
+    gapDescription = 'the complete absence of an Instagram channel';
+  } else if (!data.googleMapsLink || data.googleMapsLink.trim() === '') {
+    gapDescription = 'an unoptimized local Google Maps search listing';
+  } else {
+    gapDescription = 'noticeable leakage in your lead conversion funnel';
+  }
+
+  let extraNoteText = '';
+  if (data.notes && data.notes.trim().length > 5) {
+    // Clean notes format for clean integration into DM
+    const cleanNotes = data.notes.replace(/\[.*?\]/g, '').trim();
+    if (cleanNotes.length > 5) {
+      extraNoteText = ` During our audit, we flagged: "${cleanNotes.slice(0, 75).trim()}...".`;
+    }
+  }
+
+  // Generated DM Messages depending on the Tone selected
+  const tone = data.pitchTone || 'friendly';
+  let generatedDM = '';
+
+  const bizName = data.businessName || '[Business Name]';
+  const bizCity = data.city || '[City]';
+  const serviceName = recommendedService;
+
+  if (tone === 'professional') {
+    generatedDM = `Hello ${bizName} team, I hope this message finds you well. While reviewing businesses in ${bizCity} matching the ${data.category} sector, we analyzed your digital footprint. Looking at ${countryNotes}, we identified a key optimization area regarding ${gapDescription}.${extraNoteText} Our team at B Socio specializes in ${serviceName} to streamline client acquisition and boost organic local search visibility. Would you be open to a brief 3-minute digital audit breakdown we prepared for you this week? Best regards, B Socio Specialist.`;
+  } else if (tone === 'analytical') {
+    generatedDM = `${greeting} ${bizName} Leader. 📊 We conducted a digital KPI audit on your brand in ${bizCity}. Based on local market performance indicators in ${countryNotes}, your customer conversion funnel is experiencing friction due to ${gapDescription}.${extraNoteText} Addressing this vulnerability through ${serviceName} typically increases search performance and booking conversion rates by 35%. Let us know if we can share our 3-minute diagnostics roadmap with your team.`;
+  } else if (tone === 'urgent') {
+    generatedDM = `Quick attention ${bizName} team! 🚨 Competitors in the ${bizCity} ${data.category} space are scaling up their digital systems. Looking at ${countryNotes}, your business currently runs a critical vulnerability: ${gapDescription}.${extraNoteText} To secure your local search dominance and prevent customer loss, implementing a ${serviceName} is highly recommended. Can we send over a quick 3-minute checklist to patch this funnel immediately?`;
+  } else {
+    // friendly (default)
+    generatedDM = `${greeting} ${bizName} team! 👋 Stumbled upon your page and love the work you are doing in ${bizCity}. Looking at ${countryNotes}, we noticed some huge potential for growth, specifically regarding ${gapDescription}.${extraNoteText} At B Socio, we specialize in ${serviceName} for ${categoryTarget} to help double customer traffic and search visibility. Drop us a quick reply if you're open to a free 3-minute custom audit breakdown we created for you!`;
+  }
+
+  return {
+    score,
+    priority,
+    recommendedService,
+    generatedDM,
+    breakdown: {
+      website: websitePoints,
+      rating: ratingPoints,
+      socials: socialPoints,
+      whatsapp: whatsappPoints
+    }
+  };
+};
+
 export default function App() {
   // Leads Database State
   const [leads, setLeads] = useState(() => {
@@ -201,15 +397,18 @@ export default function App() {
     if (saved) {
       try {
         rawLeads = JSON.parse(saved);
+        if (!Array.isArray(rawLeads)) {
+          rawLeads = INITIAL_SEED_LEADS;
+        }
       } catch (e) {
         rawLeads = INITIAL_SEED_LEADS;
       }
     }
     
-    // Map initial attributes to ensure integrity
+    // Map initial attributes to ensure integrity and run calculations
     return rawLeads.map(lead => {
       const detectedCountry = COUNTRIES.find(c => c.dialCode === lead.phoneCountryCode) || COUNTRIES[0];
-      return {
+      const baseLead = {
         country: detectedCountry.name,
         phoneCountryCode: lead.phoneCountryCode || detectedCountry.dialCode,
         phone: lead.phone || '',
@@ -224,6 +423,12 @@ export default function App() {
         pitchTone: lead.pitchTone || 'friendly',
         notes: lead.notes || '',
         ...lead
+      };
+      
+      const metrics = calculateLeadMetrics(baseLead);
+      return {
+        ...baseLead,
+        ...metrics
       };
     });
   });
@@ -311,202 +516,6 @@ export default function App() {
     }
     
     setFormData(prev => ({ ...prev, phone: value }));
-  };
-
-  // Helper: Live calculations for lead data
-  const calculateLeadMetrics = (data) => {
-    let websitePoints = 0;
-    let ratingPoints = 0;
-    let socialPoints = 0;
-    let whatsappPoints = 0;
-
-    // 1. Website Status & Link Points (Max 30)
-    if (data.websiteStatus === 'none' || !data.websiteLink || data.websiteLink.trim() === '') {
-      websitePoints = 30; // Maximum opportunity metric
-    } else {
-      if (data.websiteStatus === 'poor') {
-        websitePoints = 15;
-      }
-      // If website link is present but is not HTTPS, add extra opportunity weight (+5 points)
-      if (data.websiteLink && !data.websiteLink.toLowerCase().startsWith('https://')) {
-        websitePoints = Math.min(30, websitePoints + 8);
-      }
-    }
-
-    // 2. Google Rating & Maps Link Points (Max 25)
-    let googleMapsPoints = 0;
-    if (!data.googleMapsLink || data.googleMapsLink.trim() === '') {
-      googleMapsPoints = 15;
-    }
-    
-    const rating = parseFloat(data.googleRating) || 0;
-    if (rating > 0) {
-      if (rating < 3.5) {
-        ratingPoints = 10;
-      } else if (rating < 4.2) {
-        ratingPoints = 6;
-      } else if (rating < 4.6) {
-        ratingPoints = 3;
-      }
-    } else {
-      ratingPoints = 10; // no reviews
-    }
-    const totalMapsAndRating = Math.min(25, googleMapsPoints + ratingPoints);
-
-    // 3. Instagram Presence & Notes Keyword Audit (Max 25)
-    const notesLower = (data.notes || '').toLowerCase();
-    let hasPoorSocial = false;
-    
-    if (!data.instagramLink || data.instagramLink.trim() === '') {
-      socialPoints = 20;
-    } else {
-      const socialFailureKeywords = [
-        'inactive', 'no posts', 'quiet', 'rarely post', 'abandoned',
-        'no stories', 'old posts', 'month ago', 'months ago', 'weeks ago',
-        'stale feed', 'outdated feed'
-      ];
-      hasPoorSocial = socialFailureKeywords.some(kw => notesLower.includes(kw));
-      
-      if (hasPoorSocial) {
-        socialPoints = 12;
-      } else {
-        socialPoints = 4;
-      }
-    }
-    
-    // Scan notes for extra design audit deductions (max 25 total)
-    const auditKeywords = [
-      { word: 'slow', pts: 3 },
-      { word: 'speed', pts: 3 },
-      { word: 'broken', pts: 4 },
-      { word: 'unsecured', pts: 4 },
-      { word: 'http', pts: 3 },
-      { word: 'not secure', pts: 4 },
-      { word: 'no cta', pts: 3 },
-      { word: 'logo', pts: 2 },
-      { word: 'unresponsive', pts: 4 },
-      { word: 'mobile issues', pts: 3 },
-      { word: 'outdated', pts: 3 }
-    ];
-    
-    let noteAuditAdditions = 0;
-    auditKeywords.forEach(item => {
-      if (notesLower.includes(item.word)) {
-        noteAuditAdditions += item.pts;
-      }
-    });
-
-    socialPoints = Math.min(25, socialPoints + noteAuditAdditions);
-
-    // 4. WhatsApp / Phone Availability & setup (Max 20)
-    if (!data.phone || data.phone.trim() === '') {
-      whatsappPoints = 15;
-    } else {
-      if (!data.isWhatsAppAvailable) {
-        whatsappPoints = 10;
-      } else {
-        whatsappPoints = 3;
-      }
-      
-      // Check for valid phone number length
-      const digitOnlyLength = data.phone.replace(/[^0-9]/g, '').length;
-      if (digitOnlyLength > 0 && digitOnlyLength < 8) {
-        whatsappPoints = Math.min(20, whatsappPoints + 7);
-      }
-    }
-
-    // Total Clamped Score (0 - 100)
-    const score = Math.min(100, Math.max(0, websitePoints + totalMapsAndRating + socialPoints + whatsappPoints));
-
-    // Priority Status placement
-    let priority = 'Cold';
-    if (score >= 70) priority = 'Hot';
-    else if (score >= 40) priority = 'Warm';
-
-    // Tailored pitch recommendation
-    let recommendedService = 'Full-Suite Local Expansion Setup';
-    if (data.websiteStatus === 'none' || !data.websiteLink || data.websiteLink.trim() === '') {
-      recommendedService = 'Premium Web Development & Conversion Funnel Setup';
-    } else if (data.websiteStatus === 'poor' || notesLower.includes('slow') || notesLower.includes('speed')) {
-      recommendedService = 'Vite-React Speed Redesign & SEO Overhaul';
-    } else if (!data.instagramLink || data.instagramLink.trim() === '' || hasPoorSocial) {
-      recommendedService = 'Social Media Marketing & Instagram Growth Retainer';
-    } else if (!data.googleMapsLink || data.googleMapsLink.trim() === '' || rating < 4.2) {
-      recommendedService = 'Google Maps GMB Listing & Reputation Management';
-    } else if (!data.isWhatsAppAvailable) {
-      recommendedService = 'WhatsApp Automation & CRM Pipeline Setup';
-    }
-
-    // Fetch localized config parameters
-    const matchedCountry = COUNTRIES.find(c => c.name === data.country) || COUNTRIES[0];
-    const greeting = matchedCountry.greeting;
-    const countryNotes = matchedCountry.marketPhrase;
-
-    // Set up category details
-    let categoryTarget = 'businesses';
-    if (data.category === 'Cafe') categoryTarget = 'Cafe & Restaurant brands';
-    else if (data.category === 'Gym') categoryTarget = 'Fitness Gyms and Athletic centers';
-    else if (data.category === 'Retail') categoryTarget = 'Boutique Retail stores';
-    else if (data.category === 'Real Estate') categoryTarget = 'Real Estate Brokerages';
-    else if (data.category === 'E-commerce') categoryTarget = 'Direct-to-Consumer e-commerce brands';
-    else if (data.category === 'Local Service') categoryTarget = 'Local service agencies';
-
-    // Set up gap description
-    let gapDescription = '';
-    if (data.websiteStatus === 'none' || !data.websiteLink || data.websiteLink.trim() === '') {
-      gapDescription = 'not having an online web presence';
-    } else if (data.websiteLink && !data.websiteLink.toLowerCase().startsWith('https://')) {
-      gapDescription = 'running an unsecured non-HTTPS website domain';
-    } else if (data.websiteStatus === 'poor') {
-      gapDescription = 'a slow-loading, unoptimized website layout';
-    } else if (!data.instagramLink || data.instagramLink.trim() === '') {
-      gapDescription = 'the complete absence of an Instagram channel';
-    } else if (!data.googleMapsLink || data.googleMapsLink.trim() === '') {
-      gapDescription = 'an unoptimized local Google Maps search listing';
-    } else {
-      gapDescription = 'noticeable leakage in your lead conversion funnel';
-    }
-
-    let extraNoteText = '';
-    if (data.notes && data.notes.trim().length > 5) {
-      // Clean notes format for clean integration into DM
-      const cleanNotes = data.notes.replace(/\[.*?\]/g, '').trim();
-      if (cleanNotes.length > 5) {
-        extraNoteText = ` During our audit, we flagged: "${cleanNotes.slice(0, 75).trim()}...".`;
-      }
-    }
-
-    // Generated DM Messages depending on the Tone selected
-    const tone = data.pitchTone || 'friendly';
-    let generatedDM = '';
-
-    const bizName = data.businessName || '[Business Name]';
-    const bizCity = data.city || '[City]';
-    const serviceName = recommendedService;
-
-    if (tone === 'professional') {
-      generatedDM = `Hello ${bizName} team, I hope this message finds you well. While reviewing businesses in ${bizCity} matching the ${data.category} sector, we analyzed your digital footprint. Looking at ${countryNotes}, we identified a key optimization area regarding ${gapDescription}.${extraNoteText} Our team at B Socio specializes in ${serviceName} to streamline client acquisition and boost organic local search visibility. Would you be open to a brief 3-minute digital audit breakdown we prepared for you this week? Best regards, B Socio Specialist.`;
-    } else if (tone === 'analytical') {
-      generatedDM = `${greeting} ${bizName} Leader. 📊 We conducted a digital KPI audit on your brand in ${bizCity}. Based on local market performance indicators in ${countryNotes}, your customer conversion funnel is experiencing friction due to ${gapDescription}.${extraNoteText} Addressing this vulnerability through ${serviceName} typically increases search performance and booking conversion rates by 35%. Let us know if we can share our 3-minute diagnostics roadmap with your team.`;
-    } else if (tone === 'urgent') {
-      generatedDM = `Quick attention ${bizName} team! 🚨 Competitors in the ${bizCity} ${data.category} space are scaling up their digital systems. Looking at ${countryNotes}, your business currently runs a critical vulnerability: ${gapDescription}.${extraNoteText} To secure your local search dominance and prevent customer loss, implementing a ${serviceName} is highly recommended. Can we send over a quick 3-minute checklist to patch this funnel immediately?`;
-    } else {
-      // friendly (default)
-      generatedDM = `${greeting} ${bizName} team! 👋 Stumbled upon your page and love the work you are doing in ${bizCity}. Looking at ${countryNotes}, we noticed some huge potential for growth, specifically regarding ${gapDescription}.${extraNoteText} At B Socio, we specialize in ${serviceName} for ${categoryTarget} to help double customer traffic and search visibility. Drop us a quick reply if you're open to a free 3-minute custom audit breakdown we created for you!`;
-    }
-
-    return {
-      score,
-      priority,
-      recommendedService,
-      generatedDM,
-      breakdown: {
-        website: websitePoints,
-        rating: ratingPoints,
-        socials: socialPoints,
-        whatsapp: whatsappPoints
-      }
-    };
   };
 
   // Live preview metrics of currently editing form
@@ -1663,12 +1672,12 @@ export default function App() {
                     </div>
                     
                     <div className="flex justify-between items-center gap-2 pt-1">
-                      <span className="text-[9px] text-slate-500 font-semibold uppercase bg-slate-950 px-2 py-0.5 rounded tracking-widest">{selectedLead.generatedDM.length} characters</span>
+                      <span className="text-[9px] text-slate-500 font-semibold uppercase bg-slate-950 px-2 py-0.5 rounded tracking-widest">{(selectedLead.generatedDM || '').length} characters</span>
                       
                       <div className="flex gap-2">
                         {selectedLead.phone && (
                           <a 
-                            href={`https://wa.me/${selectedLead.phoneCountryCode?.replace('+', '') || ''}${selectedLead.phone.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(selectedLead.generatedDM)}`}
+                            href={`https://wa.me/${selectedLead.phoneCountryCode?.replace('+', '') || ''}${(selectedLead.phone || '').replace(/[^0-9]/g, '')}?text=${encodeURIComponent(selectedLead.generatedDM || '')}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="px-3.5 py-2 text-[9px] bg-emerald-600 hover:bg-emerald-500 hover:text-white text-slate-50 font-extrabold rounded-xl transition-all uppercase flex items-center space-x-1.5 shadow-md shadow-emerald-950/20"

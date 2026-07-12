@@ -31,6 +31,7 @@ import {
   ShieldCheck,
   Smile
 } from 'lucide-react';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 
 // Structured Database of Global and Arab League (AL) Countries
 const COUNTRIES = [
@@ -1951,6 +1952,7 @@ export default function App() {
         </div>
       </footer>
 
+      <SpeedInsights />
     </div>
   );
 }

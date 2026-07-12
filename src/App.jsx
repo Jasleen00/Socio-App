@@ -21,7 +21,11 @@ import {
   TrendingUp,
   RefreshCw,
   Sliders,
-  CheckCircle2
+  CheckCircle2,
+  Phone,
+  User,
+  Map,
+  Tag
 } from 'lucide-react';
 
 // Seed Mock Data
@@ -31,60 +35,126 @@ const INITIAL_SEED_LEADS = [
     businessName: "Slice & Dice Pizza",
     category: "Cafe",
     city: "Chicago",
+    country: "International",
+    phone: "+1 312-555-0144",
+    leadCreatedBy: "System Seed",
+    websiteLink: "",
     instagramLink: "https://instagram.com/slice_dice_pizza",
+    googleMapsLink: "https://maps.google.com/?q=Slice+and+Dice+Pizza+Chicago",
     websiteStatus: "none",
     googleRating: 3.8,
     isWhatsAppAvailable: false,
+    followUpStatus: "New",
     notes: "Haven't posted on IG in 3 months. Website is missing completely. Need to set up basic web presence.",
-    score: 100,
+    score: 95,
     priority: "Hot",
-    recommendedService: "Premium Web Development & SEO Optimization",
-    generatedDM: "Hey Slice & Dice Pizza team! 👋 Stumbled upon your page and love what you're doing in Chicago. Noticed your online presence has some massive unlocked potential, specifically regarding your missing website. At B Socio, we specialize in Premium Web Development & SEO Optimization for Cafe brands to help double appointments and sales. Drop us a quick reply if you're open to a free 2-minute custom audit breakdown we put together for you!"
+    recommendedService: "Premium Web Development & Conversion Funnel Setup",
+    generatedDM: "Hey Slice & Dice Pizza team! 👋 Stumbled upon your page and love the work you are doing in Chicago. Looking at your local region's growing market, we noticed some huge potential for growth, specifically regarding not having an online web presence. At B Socio, we specialize in Premium Web Development & Conversion Funnel Setup for Cafe & Restaurant brands to help double customer traffic and search visibility. Drop us a quick reply if you're open to a free 3-minute custom audit breakdown we created for you!"
   },
   {
     id: "seed-2",
     businessName: "Pulse Fitness Gym",
     category: "Gym",
     city: "Miami",
+    country: "International",
+    phone: "+1 305-555-0199",
+    leadCreatedBy: "System Seed",
+    websiteLink: "https://pulsefitnessgym.com",
     instagramLink: "https://instagram.com/pulse_miami",
+    googleMapsLink: "https://maps.google.com/?q=Pulse+Fitness+Gym+Miami",
     websiteStatus: "poor",
     googleRating: 4.2,
     isWhatsAppAvailable: true,
+    followUpStatus: "Contacted",
     notes: "Their main website page returns layout errors on iPhones. Slider isn't working.",
-    score: 35,
+    score: 30,
     priority: "Cold",
-    recommendedService: "Premium Web Development & SEO Optimization",
-    generatedDM: "Hey Pulse Fitness Gym team! 👋 Stumbled upon your page and love what you're doing in Miami. Noticed your online presence has some massive unlocked potential, specifically regarding your conversion funnel. At B Socio, we specialize in Premium Web Development & SEO Optimization for Gym brands to help double appointments and sales. Drop us a quick reply if you're open to a free 2-minute custom audit breakdown we put together for you!"
+    recommendedService: "Vite-React Speed Redesign & SEO Overhaul",
+    generatedDM: "Hey Pulse Fitness Gym team! 👋 Stumbled upon your page and love the work you are doing in Miami. Looking at your local region's growing market, we noticed some huge potential for growth, specifically regarding a slow-loading, unoptimized website layout. At B Socio, we specialize in Vite-React Speed Redesign & SEO Overhaul for Fitness Gyms and Athletic centers to help double customer traffic and search visibility. Drop us a quick reply if you're open to a free 3-minute custom audit breakdown we created for you!"
   },
   {
     id: "seed-3",
     businessName: "Elite Realty Partners",
     category: "Real Estate",
     city: "Austin",
+    country: "International",
+    phone: "+1 512-555-0177",
+    leadCreatedBy: "System Seed",
+    websiteLink: "https://eliterealtypartners.com",
     instagramLink: "https://instagram.com/elite_realty_austin",
+    googleMapsLink: "https://maps.google.com/?q=Elite+Realty+Partners+Austin",
     websiteStatus: "good",
     googleRating: 4.8,
     isWhatsAppAvailable: false,
+    followUpStatus: "Interested",
     notes: "Great ratings, website is modern. But missing WhatsApp direct support widget.",
-    score: 25,
+    score: 20,
     priority: "Cold",
-    recommendedService: "Local SEO & WhatsApp Automation Setup",
-    generatedDM: "Hey Elite Realty Partners team! 👋 Stumbled upon your page and love what you're doing in Austin. Noticed your online presence has some massive unlocked potential, specifically regarding your conversion funnel. At B Socio, we specialize in Local SEO & WhatsApp Automation Setup for Real Estate brands to help double appointments and sales. Drop us a quick reply if you're open to a free 2-minute custom audit breakdown we put together for you!"
+    recommendedService: "WhatsApp Automation & CRM Pipeline Setup",
+    generatedDM: "Hey Elite Realty Partners team! 👋 Stumbled upon your page and love the work you are doing in Austin. Looking at your local region's growing market, we noticed some huge potential for growth, specifically regarding leakage in your lead conversion funnel. At B Socio, we specialize in WhatsApp Automation & CRM Pipeline Setup for Real Estate Brokerages to help double customer traffic and search visibility. Drop us a quick reply if you're open to a free 3-minute custom audit breakdown we created for you!"
   },
   {
     id: "seed-4",
     businessName: "Glow Boutique",
     category: "Retail",
     city: "Los Angeles",
+    country: "International",
+    phone: "+1 213-555-0155",
+    leadCreatedBy: "System Seed",
+    websiteLink: "https://glowboutiquela.com",
     instagramLink: "https://instagram.com/glow_la",
+    googleMapsLink: "https://maps.google.com/?q=Glow+Boutique+Los+Angeles",
     websiteStatus: "poor",
     googleRating: 3.9,
     isWhatsAppAvailable: false,
+    followUpStatus: "Converted",
     notes: "Inactive social page, feed is quiet. Website checkout has bugs.",
-    score: 85,
-    priority: "Hot",
-    recommendedService: "Premium Web Development & SEO Optimization",
-    generatedDM: "Hey Glow Boutique team! 👋 Stumbled upon your page and love what you're doing in Los Angeles. Noticed your online presence has some massive unlocked potential, specifically regarding your conversion funnel. At B Socio, we specialize in Premium Web Development & SEO Optimization for Retail brands to help double appointments and sales. Drop us a quick reply if you're open to a free 2-minute custom audit breakdown we put together for you!"
+    score: 45,
+    priority: "Warm",
+    recommendedService: "Vite-React Speed Redesign & SEO Overhaul",
+    generatedDM: "Hey Glow Boutique team! 👋 Stumbled upon your page and love the work you are doing in Los Angeles. Looking at your local region's growing market, we noticed some huge potential for growth, specifically regarding a slow-loading, unoptimized website layout. At B Socio, we specialize in Vite-React Speed Redesign & SEO Overhaul for Boutique Retail stores to help double customer traffic and search visibility. Drop us a quick reply if you're open to a free 3-minute custom audit breakdown we created for you!"
+  },
+  {
+    id: "seed-5",
+    businessName: "Chai Shai Cafe",
+    category: "Cafe",
+    city: "Mumbai",
+    country: "India",
+    phone: "+91 98765 43210",
+    leadCreatedBy: "System Seed",
+    websiteLink: "",
+    instagramLink: "https://instagram.com/chaishaimumbai",
+    googleMapsLink: "https://maps.google.com/?q=Chai+Shai+Mumbai",
+    websiteStatus: "none",
+    googleRating: 4.1,
+    isWhatsAppAvailable: true,
+    followUpStatus: "New",
+    notes: "Very active food posts but missing website completely. Needs reservation and delivery setup.",
+    score: 55,
+    priority: "Warm",
+    recommendedService: "Premium Web Development & Conversion Funnel Setup",
+    generatedDM: "Namaste Chai Shai Cafe team! 👋 Stumbled upon your page and love the work you are doing in Mumbai. Looking at India's hyper-competitive local market, we noticed some huge potential for growth, specifically regarding not having an online web presence. At B Socio, we specialize in Premium Web Development & Conversion Funnel Setup for Cafe & Restaurant brands to help double customer traffic and search visibility. Drop us a quick reply if you're open to a free 3-minute custom audit breakdown we created for you!"
+  },
+  {
+    id: "seed-6",
+    businessName: "Atlas Gyms Marrakesh",
+    category: "Gym",
+    city: "Marrakesh",
+    country: "Morocco",
+    phone: "+212 661-123456",
+    leadCreatedBy: "System Seed",
+    websiteLink: "https://atlasgyms.ma",
+    instagramLink: "",
+    googleMapsLink: "https://maps.google.com/?q=Atlas+Gyms+Marrakesh",
+    websiteStatus: "good",
+    googleRating: 4.4,
+    isWhatsAppAvailable: false,
+    followUpStatus: "Contacted",
+    notes: "Good website but completely missing Instagram page. Could double membership through social media campaigns.",
+    score: 40,
+    priority: "Cold",
+    recommendedService: "Social Media Marketing & Instagram Growth Retainer",
+    generatedDM: "Bonjour/Salam Atlas Gyms Marrakesh team! 👋 Stumbled upon your page and love the work you are doing in Marrakesh. Looking at the rapid expansion of local commerce in Morocco, we noticed some huge potential for growth, specifically regarding the complete absence of an Instagram channel. At B Socio, we specialize in Social Media Marketing & Instagram Growth Retainer for Fitness Gyms and Athletic centers to help double customer traffic and search visibility. Drop us a quick reply if you're open to a free 3-minute custom audit breakdown we created for you!"
   }
 ];
 
@@ -92,7 +162,24 @@ export default function App() {
   // Leads Database State
   const [leads, setLeads] = useState(() => {
     const saved = localStorage.getItem('bsocio-leads');
-    return saved ? JSON.parse(saved) : INITIAL_SEED_LEADS;
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        // Backfill new fields for compatibility
+        return parsed.map(lead => ({
+          country: 'India',
+          phone: '',
+          leadCreatedBy: 'Admin',
+          websiteLink: '',
+          googleMapsLink: '',
+          followUpStatus: 'New',
+          ...lead
+        }));
+      } catch (e) {
+        return INITIAL_SEED_LEADS;
+      }
+    }
+    return INITIAL_SEED_LEADS;
   });
 
   // Intake Form Inputs State
@@ -100,10 +187,16 @@ export default function App() {
     businessName: '',
     category: 'Cafe',
     city: '',
+    country: 'India',
+    phone: '',
+    leadCreatedBy: '',
+    websiteLink: '',
     instagramLink: '',
+    googleMapsLink: '',
     websiteStatus: 'none',
     googleRating: 3.8,
     isWhatsAppAvailable: true,
+    followUpStatus: 'New',
     notes: ''
   });
 
@@ -114,6 +207,7 @@ export default function App() {
   const [searchTerm, setSearchTerm] = useState('');
   const [filterCategory, setFilterCategory] = useState('All');
   const [filterPriority, setFilterPriority] = useState('All');
+  const [filterStatus, setFilterStatus] = useState('All');
 
   // Copy Clipboard Toast State
   const [copiedState, setCopiedState] = useState(false);
@@ -138,46 +232,112 @@ export default function App() {
     let socialPoints = 0;
     let whatsappPoints = 0;
 
-    // Website Status Points
-    if (data.websiteStatus === 'none') websitePoints = 30;
-    else if (data.websiteStatus === 'poor') websitePoints = 15;
+    // 1. Website Status & link Points (Max 30)
+    if (data.websiteStatus === 'none' || !data.websiteLink || data.websiteLink.trim() === '') {
+      websitePoints = 30;
+    } else if (data.websiteStatus === 'poor') {
+      websitePoints = 15;
+    }
 
-    // Google Rating Points
-    const rating = parseFloat(data.googleRating);
-    if (rating < 4.0) ratingPoints = 25;
-    else if (rating >= 4.0 && rating <= 4.5) ratingPoints = 10;
+    // 2. Google Rating & Maps Link Points (Max 25)
+    let googleMapsPoints = 0;
+    if (!data.googleMapsLink || data.googleMapsLink.trim() === '') {
+      googleMapsPoints += 15;
+    }
+    const rating = parseFloat(data.googleRating) || 0;
+    if (rating < 4.0) {
+      ratingPoints = 10;
+    } else if (rating >= 4.0 && rating <= 4.5) {
+      ratingPoints = 5;
+    }
+    const totalMapsAndRating = googleMapsPoints + ratingPoints;
 
-    // Social Presence Check based on notes
+    // 3. Instagram presence & activity Points (Max 25)
     const notesLower = (data.notes || '').toLowerCase();
     const hasLowSocialKeywords = ['inactive', 'no posts', 'slow', 'missing', 'quiet', "haven't posted", "3 months"].some(kw => notesLower.includes(kw));
-    if (hasLowSocialKeywords) socialPoints = 25;
-    else socialPoints = 5;
 
-    // WhatsApp Availability Points
-    if (!data.isWhatsAppAvailable) whatsappPoints = 20;
-    else whatsappPoints = 5;
+    if (!data.instagramLink || data.instagramLink.trim() === '') {
+      socialPoints = 20;
+    } else if (hasLowSocialKeywords) {
+      socialPoints = 10;
+    } else {
+      socialPoints = 5;
+    }
 
-    // Total clamped Score
-    const score = Math.min(100, Math.max(0, websitePoints + ratingPoints + socialPoints + whatsappPoints));
+    // 4. WhatsApp / Phone Availability & setup (Max 20)
+    if (!data.phone || data.phone.trim() === '') {
+      whatsappPoints = 15;
+    } else if (!data.isWhatsAppAvailable) {
+      whatsappPoints = 10;
+    } else {
+      whatsappPoints = 5;
+    }
+
+    // Total clamped Score (0 - 100)
+    const score = Math.min(100, Math.max(0, websitePoints + totalMapsAndRating + socialPoints + whatsappPoints));
 
     // Priority Status
     let priority = 'Cold';
     if (score >= 75) priority = 'Hot';
     else if (score >= 45) priority = 'Warm';
 
-    // Recommended Service logic
-    let recommendedService = 'Full-Suite Digital Marketing Growth Plan';
-    if (data.websiteStatus === 'none' || data.websiteStatus === 'poor') {
-      recommendedService = 'Premium Web Development & SEO Optimization';
-    } else if (rating < 4.0 || !data.isWhatsAppAvailable) {
-      recommendedService = 'Local SEO & WhatsApp Automation Setup';
-    } else if (hasLowSocialKeywords) {
-      recommendedService = 'Social Media Growth & High-Converting Content';
+    // Tailored pitch recommendation
+    let recommendedService = 'Full-Suite Local Expansion Setup';
+    if (data.websiteStatus === 'none' || !data.websiteLink || data.websiteLink.trim() === '') {
+      recommendedService = 'Premium Web Development & Conversion Funnel Setup';
+    } else if (data.websiteStatus === 'poor') {
+      recommendedService = 'Vite-React Speed Redesign & SEO Overhaul';
+    } else if (!data.instagramLink || data.instagramLink.trim() === '' || hasLowSocialKeywords) {
+      recommendedService = 'Social Media Marketing & Instagram Growth Retainer';
+    } else if (!data.googleMapsLink || data.googleMapsLink.trim() === '' || rating < 4.2) {
+      recommendedService = 'Google Maps GMB Listing & Reputation Management';
+    } else if (!data.isWhatsAppAvailable) {
+      recommendedService = 'WhatsApp Automation & CRM Pipeline Setup';
     }
 
-    // Dynamic DM Template
-    const formattedWebsite = data.websiteStatus === 'none' ? 'missing website' : 'conversion funnel';
-    const generatedDM = `Hey ${data.businessName || '[Business Name]'} team! 👋 Stumbled upon your page and love what you're doing in ${data.city || '[City]'}. Noticed your online presence has some massive unlocked potential, specifically regarding your ${formattedWebsite}. At B Socio, we specialize in ${recommendedService} for ${data.category || '[Category]'} brands to help double appointments and sales. Drop us a quick reply if you're open to a free 2-minute custom audit breakdown we put together for you!`;
+    // Set up customized Greetings based on country
+    let greeting = 'Hey';
+    let countryNotes = '';
+    if (data.country === 'India') {
+      greeting = 'Namaste';
+      countryNotes = 'India\'s hyper-competitive local market';
+    } else if (data.country === 'Morocco') {
+      greeting = 'Bonjour/Salam';
+      countryNotes = 'the rapid expansion of local commerce in Morocco';
+    } else {
+      greeting = 'Hey';
+      countryNotes = 'your local region\'s growing market';
+    }
+
+    // Set up category details
+    let categoryTarget = 'businesses';
+    if (data.category === 'Cafe') categoryTarget = 'Cafe & Restaurant brands';
+    else if (data.category === 'Gym') categoryTarget = 'Fitness Gyms and Athletic centers';
+    else if (data.category === 'Retail') categoryTarget = 'Boutique Retail stores';
+    else if (data.category === 'Real Estate') categoryTarget = 'Real Estate Brokerages';
+    else if (data.category === 'E-commerce') categoryTarget = 'Direct-to-Consumer e-commerce brands';
+    else if (data.category === 'Local Service') categoryTarget = 'Local service agencies';
+
+    // Set up gap description
+    let gapDescription = '';
+    if (data.websiteStatus === 'none' || !data.websiteLink || data.websiteLink.trim() === '') {
+      gapDescription = 'not having an online web presence';
+    } else if (data.websiteStatus === 'poor') {
+      gapDescription = 'a slow-loading, unoptimized website layout';
+    } else if (!data.instagramLink || data.instagramLink.trim() === '') {
+      gapDescription = 'the complete absence of an Instagram channel';
+    } else if (!data.googleMapsLink || data.googleMapsLink.trim() === '') {
+      gapDescription = 'an unoptimized local Google Maps search listing';
+    } else {
+      gapDescription = 'leakage in your lead conversion funnel';
+    }
+
+    let extraNoteText = '';
+    if (data.notes && data.notes.trim().length > 5) {
+      extraNoteText = ` Specifying on the notes: our review flagged issues: "${data.notes.slice(0, 80)}...".`;
+    }
+
+    const generatedDM = `${greeting} ${data.businessName || '[Business Name]'} team! 👋 Stumbled upon your page and love the work you are doing in ${data.city || '[City]'}. Looking at ${countryNotes}, we noticed some huge potential for growth, specifically regarding ${gapDescription}.${extraNoteText} At B Socio, we specialize in ${recommendedService} for ${categoryTarget} to help double customer traffic and search visibility. Drop us a quick reply if you're open to a free 3-minute custom audit breakdown we created for you!`;
 
     return {
       score,
@@ -240,10 +400,16 @@ export default function App() {
       businessName: '',
       category: 'Cafe',
       city: '',
+      country: 'India',
+      phone: '',
+      leadCreatedBy: '',
+      websiteLink: '',
       instagramLink: '',
+      googleMapsLink: '',
       websiteStatus: 'none',
       googleRating: 3.8,
       isWhatsAppAvailable: true,
+      followUpStatus: 'New',
       notes: ''
     });
   };
@@ -305,17 +471,23 @@ export default function App() {
       return;
     }
 
-    let csv = 'Business Name,Category,City,Instagram,Website Status,Google Rating,WhatsApp,Score,Priority,Pitch Service\n';
+    let csv = 'Business Name,Category,Country,City,Phone,Lead Created By,Website Link,Instagram Link,Google Maps Link,Website Status,Google Rating,WhatsApp,Score,Priority,Follow-up Status,Pitch Service\n';
     leads.forEach(l => {
       csv += `"${l.businessName.replace(/"/g, '""')}",`;
       csv += `"${l.category}",`;
+      csv += `"${(l.country || 'India').replace(/"/g, '""')}",`;
       csv += `"${l.city.replace(/"/g, '""')}",`;
+      csv += `"${(l.phone || '').replace(/"/g, '""')}",`;
+      csv += `"${(l.leadCreatedBy || '').replace(/"/g, '""')}",`;
+      csv += `"${(l.websiteLink || '').replace(/"/g, '""')}",`;
       csv += `"${(l.instagramLink || '').replace(/"/g, '""')}",`;
+      csv += `"${(l.googleMapsLink || '').replace(/"/g, '""')}",`;
       csv += `"${l.websiteStatus}",`;
       csv += `${l.googleRating},`;
       csv += `"${l.isWhatsAppAvailable ? 'Yes' : 'No'}",`;
       csv += `${l.score},`;
       csv += `"${l.priority}",`;
+      csv += `"${(l.followUpStatus || 'New').replace(/"/g, '""')}",`;
       csv += `"${l.recommendedService.replace(/"/g, '""')}"\n`;
     });
 
@@ -336,10 +508,16 @@ export default function App() {
       businessName: lead.businessName,
       category: lead.category,
       city: lead.city,
+      country: lead.country || 'India',
+      phone: lead.phone || '',
+      leadCreatedBy: lead.leadCreatedBy || '',
+      websiteLink: lead.websiteLink || '',
       instagramLink: lead.instagramLink || '',
+      googleMapsLink: lead.googleMapsLink || '',
       websiteStatus: lead.websiteStatus,
       googleRating: lead.googleRating,
       isWhatsAppAvailable: lead.isWhatsAppAvailable,
+      followUpStatus: lead.followUpStatus || 'New',
       notes: lead.notes || ''
     });
     showToast('Loaded lead back to editor!');
@@ -357,10 +535,11 @@ export default function App() {
   const filteredLeads = leads.filter(l => {
     const matchesSearch = l.businessName.toLowerCase().includes(searchTerm.toLowerCase()) || 
                           l.city.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                          l.notes.toLowerCase().includes(searchTerm.toLowerCase());
+                          (l.notes || '').toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory = filterCategory === 'All' || l.category === filterCategory;
     const matchesPriority = filterPriority === 'All' || l.priority === filterPriority;
-    return matchesSearch && matchesCategory && matchesPriority;
+    const matchesStatus = filterStatus === 'All' || (l.followUpStatus || 'New') === filterStatus;
+    return matchesSearch && matchesCategory && matchesPriority && matchesStatus;
   });
 
   // Statistics computations
@@ -485,7 +664,7 @@ export default function App() {
                 </div>
               </div>
 
-              {/* Category & City */}
+              {/* Category & Country */}
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Category *</label>
@@ -504,6 +683,23 @@ export default function App() {
                   </select>
                 </div>
                 <div>
+                  <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Target Country *</label>
+                  <select
+                    name="country"
+                    value={formData.country}
+                    onChange={handleInputChange}
+                    className="w-full bg-slate-950 border border-slate-800 rounded-xl py-2 px-2.5 text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-colors font-medium text-slate-200"
+                  >
+                    <option value="India">India 🇮🇳</option>
+                    <option value="Morocco">Morocco 🇲🇦</option>
+                    <option value="International">International 🌐</option>
+                  </select>
+                </div>
+              </div>
+
+              {/* City & Created By */}
+              <div className="grid grid-cols-2 gap-4">
+                <div>
                   <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">City *</label>
                   <div className="relative">
                     <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-500 pointer-events-none">
@@ -515,16 +711,71 @@ export default function App() {
                       name="city"
                       value={formData.city}
                       onChange={handleInputChange}
-                      placeholder="e.g. Chicago"
+                      placeholder="e.g. Mumbai or Chicago"
+                      className="w-full bg-slate-950 border border-slate-800 rounded-xl py-2 pl-9 pr-3 text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-colors font-medium text-slate-200"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Lead Created By</label>
+                  <div className="relative">
+                    <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-500 pointer-events-none">
+                      <User className="w-4 h-4" />
+                    </span>
+                    <input
+                      type="text"
+                      name="leadCreatedBy"
+                      value={formData.leadCreatedBy}
+                      onChange={handleInputChange}
+                      placeholder="e.g. Jasleen"
                       className="w-full bg-slate-950 border border-slate-800 rounded-xl py-2 pl-9 pr-3 text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-colors font-medium text-slate-200"
                     />
                   </div>
                 </div>
               </div>
 
-              {/* Instagram link */}
+              {/* Phone / WhatsApp Number */}
               <div>
-                <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Instagram Link</label>
+                <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Phone / WhatsApp Number</label>
+                <div className="relative">
+                  <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-500 pointer-events-none">
+                    <Phone className="w-4 h-4" />
+                  </span>
+                  <input
+                    type="tel"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleInputChange}
+                    placeholder={
+                      formData.country === 'India' ? 'e.g. +91 98765 43210' :
+                      formData.country === 'Morocco' ? 'e.g. +212 661-123456' :
+                      'e.g. +1 555-0199 (Intl Number)'
+                    }
+                    className="w-full bg-slate-950 border border-slate-800 rounded-xl py-2 pl-9 pr-3 text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-colors font-medium text-slate-200"
+                  />
+                </div>
+              </div>
+
+              {/* Presence / Links Group */}
+              <div className="space-y-2.5">
+                <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400">Digital Presence Links</label>
+                
+                {/* Website Link */}
+                <div className="relative">
+                  <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-500 pointer-events-none">
+                    <Globe className="w-4 h-4" />
+                  </span>
+                  <input
+                    type="url"
+                    name="websiteLink"
+                    value={formData.websiteLink}
+                    onChange={handleInputChange}
+                    placeholder="Website Link (e.g. https://mybusiness.com)"
+                    className="w-full bg-slate-950 border border-slate-800 rounded-xl py-2 pl-9 pr-3 text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-colors font-medium text-slate-200"
+                  />
+                </div>
+
+                {/* Instagram Link */}
                 <div className="relative">
                   <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-500 pointer-events-none">
                     <Instagram className="w-4 h-4" />
@@ -534,13 +785,28 @@ export default function App() {
                     name="instagramLink"
                     value={formData.instagramLink}
                     onChange={handleInputChange}
-                    placeholder="e.g. instagram.com/slice_pizza"
+                    placeholder="Instagram Link (e.g. https://instagram.com/mybusiness)"
+                    className="w-full bg-slate-950 border border-slate-800 rounded-xl py-2 pl-9 pr-3 text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-colors font-medium text-slate-200"
+                  />
+                </div>
+
+                {/* Google Maps Link */}
+                <div className="relative">
+                  <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-500 pointer-events-none">
+                    <Map className="w-4 h-4" />
+                  </span>
+                  <input
+                    type="url"
+                    name="googleMapsLink"
+                    value={formData.googleMapsLink}
+                    onChange={handleInputChange}
+                    placeholder="Google Maps Location Link"
                     className="w-full bg-slate-950 border border-slate-800 rounded-xl py-2 pl-9 pr-3 text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-colors font-medium text-slate-200"
                   />
                 </div>
               </div>
 
-              {/* Website Status & Google Rating */}
+              {/* Website Status & Follow-up Status */}
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Website Status *</label>
@@ -556,28 +822,45 @@ export default function App() {
                   </select>
                 </div>
                 <div>
-                  <div className="flex justify-between items-center mb-1">
-                    <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400">Google Rating</label>
-                    <span className="text-[10px] font-bold text-indigo-400">{formData.googleRating} ★</span>
-                  </div>
-                  <input
-                    type="range"
-                    min="1.0"
-                    max="5.0"
-                    step="0.1"
-                    name="googleRating"
-                    value={formData.googleRating}
-                    onChange={(e) => handleRatingChange(parseFloat(e.target.value))}
-                    className="w-full h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-indigo-500 mt-2"
-                  />
+                  <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Follow-up Status *</label>
+                  <select
+                    name="followUpStatus"
+                    value={formData.followUpStatus}
+                    onChange={handleInputChange}
+                    className="w-full bg-slate-950 border border-slate-800 rounded-xl py-2 px-2.5 text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-colors font-medium text-slate-200"
+                  >
+                    <option value="New">New</option>
+                    <option value="Contacted">Contacted</option>
+                    <option value="Interested">Interested</option>
+                    <option value="Not Interested">Not Interested</option>
+                    <option value="Converted">Converted</option>
+                  </select>
                 </div>
+              </div>
+
+              {/* Google Rating Slider */}
+              <div>
+                <div className="flex justify-between items-center mb-1">
+                  <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400">Google Reviews Rating</label>
+                  <span className="text-[10px] font-bold text-indigo-400">{formData.googleRating} ★</span>
+                </div>
+                <input
+                  type="range"
+                  min="1.0"
+                  max="5.0"
+                  step="0.1"
+                  name="googleRating"
+                  value={formData.googleRating}
+                  onChange={(e) => handleRatingChange(parseFloat(e.target.value))}
+                  className="w-full h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-indigo-500 mt-2"
+                />
               </div>
 
               {/* WhatsApp Toggle */}
               <div className="flex items-center justify-between bg-slate-950/50 p-3 rounded-xl border border-slate-850">
                 <div className="flex flex-col">
-                  <span className="text-xs font-semibold text-slate-350">WhatsApp Available?</span>
-                  <span className="text-[9px] text-slate-500">Supports direct chat lines</span>
+                  <span className="text-xs font-semibold text-slate-350">WhatsApp Active?</span>
+                  <span className="text-[9px] text-slate-500">Number set up on WhatsApp</span>
                 </div>
                 <label className="relative inline-flex items-center cursor-pointer">
                   <input
@@ -595,7 +878,6 @@ export default function App() {
               <div>
                 <div className="flex justify-between items-center mb-1.5">
                   <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400">Audits & Notes</label>
-                  {/* Small trigger detector */}
                   {['inactive', 'no posts', 'slow', 'missing', 'quiet'].some(kw => formData.notes.toLowerCase().includes(kw)) && (
                     <span className="text-[9px] font-bold text-teal-400 flex items-center animate-pulse">
                       <Sparkles className="w-3 h-3 mr-1" /> Low Social Presence Detected
@@ -608,7 +890,7 @@ export default function App() {
                   value={formData.notes}
                   onChange={handleInputChange}
                   placeholder="e.g. Website loads slowly. No posts on Instagram feed for 3 months."
-                  className="w-full bg-slate-950 border border-slate-800 rounded-xl py-2 px-3 text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-colors font-medium text-slate-200 placeholder-slate-600"
+                  className="w-full bg-slate-950 border border-slate-805 border-slate-800 rounded-xl py-2 px-3 text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-colors font-medium text-slate-200 placeholder-slate-600"
                 />
               </div>
 
@@ -630,12 +912,37 @@ export default function App() {
             <section className="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl relative overflow-hidden">
               <div className="absolute top-0 right-0 w-36 h-36 bg-gradient-to-bl from-indigo-500/10 to-transparent rounded-full blur-3xl pointer-events-none"></div>
 
-              <div className="flex items-center space-x-2 border-b border-slate-800 pb-3 mb-5">
+              <div className="flex items-center space-x-2 border-b border-slate-800 pb-3 mb-4">
                 <Sparkles className="w-4.5 h-4.5 text-indigo-400" />
                 <h2 className="font-display font-bold text-base">
                   Active Lead Report: <span className="text-slate-400">{selectedLead ? selectedLead.businessName : 'Pending Form Input'}</span>
                 </h2>
               </div>
+
+              {selectedLead && (
+                <div className="flex flex-wrap items-center gap-2 text-[10px] sm:text-xs text-slate-400 mb-5 px-1">
+                  <span className="flex items-center space-x-1 bg-slate-950 px-2.5 py-1 rounded-lg border border-slate-850">
+                    <MapPin className="w-3.5 h-3.5 text-indigo-400" />
+                    <span>{selectedLead.city}, {selectedLead.country}</span>
+                  </span>
+                  <span className="flex items-center space-x-1 bg-slate-950 px-2.5 py-1 rounded-lg border border-slate-850">
+                    <Tag className="w-3.5 h-3.5 text-teal-400" />
+                    <span>{selectedLead.category}</span>
+                  </span>
+                  {selectedLead.leadCreatedBy && (
+                    <span className="flex items-center space-x-1 bg-slate-950 px-2.5 py-1 rounded-lg border border-slate-850">
+                      <User className="w-3.5 h-3.5 text-amber-400" />
+                      <span>By: {selectedLead.leadCreatedBy}</span>
+                    </span>
+                  )}
+                  {selectedLead.phone && (
+                    <span className="flex items-center space-x-1 bg-slate-950 px-2.5 py-1 rounded-lg border border-slate-850">
+                      <Phone className="w-3.5 h-3.5 text-emerald-400" />
+                      <span>{selectedLead.phone}</span>
+                    </span>
+                  )}
+                </div>
+              )}
 
               {selectedLead ? (
                 <div className="space-y-6 animate-fade-in">
@@ -670,14 +977,25 @@ export default function App() {
                         </div>
                       </div>
 
-                      <div className="mt-3">
-                        <span className={`inline-flex items-center space-x-1 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider border ${
+                      <div className="flex flex-wrap gap-2 justify-center mt-3">
+                        <span className={`inline-flex items-center space-x-1 px-2.5 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider border ${
                           selectedLead.priority === 'Hot' ? 'bg-rose-500/10 text-rose-400 border-rose-500/20' : 
                           selectedLead.priority === 'Warm' ? 'bg-amber-500/10 text-amber-400 border-amber-500/20' : 
                           'bg-sky-500/10 text-sky-400 border-sky-500/20'
                         }`}>
                           <Flame className="w-3.5 h-3.5 fill-current" />
-                          <span>{selectedLead.priority} Priority</span>
+                          <span>{selectedLead.priority}</span>
+                        </span>
+                        
+                        <span className={`inline-flex items-center space-x-1 px-2.5 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider border ${
+                          selectedLead.followUpStatus === 'Converted' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' : 
+                          selectedLead.followUpStatus === 'Interested' ? 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20' : 
+                          selectedLead.followUpStatus === 'Contacted' ? 'bg-amber-500/10 text-amber-400 border-amber-500/20' : 
+                          selectedLead.followUpStatus === 'Not Interested' ? 'bg-rose-500/10 text-rose-400 border-rose-500/20' : 
+                          'bg-slate-500/15 text-slate-350 border-slate-750'
+                        }`}>
+                          <CheckCircle2 className="w-3.5 h-3.5" />
+                          <span>{selectedLead.followUpStatus || 'New'}</span>
                         </span>
                       </div>
                     </div>
@@ -689,7 +1007,7 @@ export default function App() {
                       <div className="grid grid-cols-2 gap-3 bg-slate-950/60 p-3 rounded-xl border border-slate-850 text-[10px] sm:text-xs text-slate-400">
                         <div>
                           <span className="text-slate-500 block uppercase tracking-wider text-[8px] mb-0.5">Website</span>
-                          <span className="font-bold text-slate-200 capitalize">{selectedLead.websiteStatus === 'none' ? 'No Website' : selectedLead.websiteStatus}</span>
+                          <span className="font-bold text-slate-200 capitalize">{selectedLead.websiteLink ? 'Link Provided' : selectedLead.websiteStatus === 'none' ? 'No Website' : selectedLead.websiteStatus}</span>
                         </div>
                         <div>
                           <span className="text-slate-500 block uppercase tracking-wider text-[8px] mb-0.5">Google Reviews</span>
@@ -702,13 +1020,56 @@ export default function App() {
                         <div>
                           <span className="text-slate-500 block uppercase tracking-wider text-[8px] mb-0.5">Social Check</span>
                           <span className="font-bold text-slate-200">
-                            {['inactive', 'no posts', 'slow', 'missing', 'quiet'].some(kw => (selectedLead.notes || '').toLowerCase().includes(kw)) ? 'Low Activity' : 'Active Channel'}
+                            {selectedLead.instagramLink ? (
+                              ['inactive', 'no posts', 'slow', 'missing', 'quiet'].some(kw => (selectedLead.notes || '').toLowerCase().includes(kw)) ? 'Low Activity' : 'Active Channel'
+                            ) : (
+                              'No IG link'
+                            )}
                           </span>
                         </div>
                       </div>
 
+                      {/* Interactive links group */}
+                      <div className="flex gap-2 text-[10px] uppercase font-bold tracking-wider">
+                        {selectedLead.websiteLink ? (
+                          <a href={selectedLead.websiteLink} target="_blank" rel="noopener noreferrer" className="flex items-center space-x-1 px-2.5 py-1.5 bg-slate-950 hover:bg-slate-850 hover:text-white border border-slate-800 rounded-lg text-slate-400 transition-colors flex-1 justify-center">
+                            <Globe className="w-3.5 h-3.5 text-indigo-400" />
+                            <span>Website</span>
+                          </a>
+                        ) : (
+                          <span className="flex items-center space-x-1 px-2.5 py-1.5 bg-slate-950/20 border border-slate-900/60 rounded-lg text-slate-700/50 flex-1 justify-center select-none cursor-not-allowed">
+                            <Globe className="w-3.5 h-3.5 text-slate-800" />
+                            <span>No Web Link</span>
+                          </span>
+                        )}
+
+                        {selectedLead.instagramLink ? (
+                          <a href={selectedLead.instagramLink} target="_blank" rel="noopener noreferrer" className="flex items-center space-x-1 px-2.5 py-1.5 bg-slate-950 hover:bg-slate-850 hover:text-white border border-slate-800 rounded-lg text-slate-400 transition-colors flex-1 justify-center">
+                            <Instagram className="w-3.5 h-3.5 text-pink-400" />
+                            <span>Instagram</span>
+                          </a>
+                        ) : (
+                          <span className="flex items-center space-x-1 px-2.5 py-1.5 bg-slate-950/20 border border-slate-900/60 rounded-lg text-slate-700/50 flex-1 justify-center select-none cursor-not-allowed">
+                            <Instagram className="w-3.5 h-3.5 text-slate-800" />
+                            <span>No IG Link</span>
+                          </span>
+                        )}
+
+                        {selectedLead.googleMapsLink ? (
+                          <a href={selectedLead.googleMapsLink} target="_blank" rel="noopener noreferrer" className="flex items-center space-x-1 px-2.5 py-1.5 bg-slate-950 hover:bg-slate-850 hover:text-white border border-slate-800 rounded-lg text-slate-400 transition-colors flex-1 justify-center">
+                            <Map className="w-3.5 h-3.5 text-teal-400" />
+                            <span>Google Maps</span>
+                          </a>
+                        ) : (
+                          <span className="flex items-center space-x-1 px-2.5 py-1.5 bg-slate-950/20 border border-slate-900/60 rounded-lg text-slate-700/50 flex-1 justify-center select-none cursor-not-allowed">
+                            <Map className="w-3.5 h-3.5 text-slate-800" />
+                            <span>No Maps</span>
+                          </span>
+                        )}
+                      </div>
+
                       {/* Recommend service */}
-                      <div className="p-3 bg-indigo-500/5 rounded-xl border border-indigo-500/20">
+                      <div className="p-3 bg-indigo-500/5 rounded-xl border border-indigo-500/20 font-sans">
                         <span className="text-indigo-400 font-extrabold uppercase tracking-widest text-[8px] block mb-0.5">B SOCIO PITCH RECOMMENDATION</span>
                         <h4 className="font-display font-extrabold text-sm text-slate-100">{selectedLead.recommendedService}</h4>
                       </div>
@@ -803,9 +1164,8 @@ export default function App() {
                   </button>
                 </div>
               </div>
-
-              {/* Filters toolbar */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 bg-slate-950/50 p-3 rounded-xl border border-slate-850 text-[10px] sm:text-xs">
+                   {/* Filters toolbar */}
+              <div className="grid grid-cols-1 sm:grid-cols-4 gap-3 bg-slate-950/50 p-3 rounded-xl border border-slate-850 text-[10px] sm:text-xs">
                 {/* Search */}
                 <div className="relative">
                   <span className="absolute inset-y-0 left-0 pl-2.5 flex items-center text-slate-650 pointer-events-none">
@@ -852,6 +1212,23 @@ export default function App() {
                     <option value="Local Service">All Services</option>
                   </select>
                 </div>
+
+                {/* Follow-up Status */}
+                <div className="flex items-center space-x-2">
+                  <span className="text-slate-500 font-semibold uppercase tracking-wider text-[9px]">Status:</span>
+                  <select
+                    value={filterStatus}
+                    onChange={(e) => setFilterStatus(e.target.value)}
+                    className="flex-grow bg-slate-900 border border-slate-800 rounded-lg py-1.5 px-2 text-xs text-slate-300 focus:outline-none"
+                  >
+                    <option value="All">All Status</option>
+                    <option value="New">New</option>
+                    <option value="Contacted">Contacted</option>
+                    <option value="Interested">Interested</option>
+                    <option value="Not Interested">Not Interested</option>
+                    <option value="Converted">Converted</option>
+                  </select>
+                </div>
               </div>
 
               {/* Grid / List output */}
@@ -866,12 +1243,29 @@ export default function App() {
                           selectedLead && selectedLead.id === lead.id ? 'bg-slate-850/60' : ''
                         }`}
                       >
-                        <div className="space-y-1 pr-4 truncate">
-                          <h4 className="font-bold text-xs sm:text-sm text-slate-100 truncate">{lead.businessName}</h4>
+                        <div className="space-y-1.5 pr-4 truncate flex-grow">
+                          <div className="flex items-center space-x-2 truncate">
+                            <h4 className="font-bold text-xs sm:text-sm text-slate-100 truncate">{lead.businessName}</h4>
+                            <span className={`text-[8px] font-extrabold uppercase px-1.5 py-0.5 rounded border leading-none ${
+                              lead.followUpStatus === 'Converted' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' : 
+                              lead.followUpStatus === 'Interested' ? 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20' : 
+                              lead.followUpStatus === 'Contacted' ? 'bg-amber-500/10 text-amber-400 border-amber-500/20' : 
+                              lead.followUpStatus === 'Not Interested' ? 'bg-rose-500/10 text-rose-400 border-rose-500/20' : 
+                              'bg-slate-950 text-slate-450 border-slate-800'
+                            }`}>
+                              {lead.followUpStatus || 'New'}
+                            </span>
+                          </div>
                           <div className="flex items-center space-x-2 text-[9px] text-slate-500 font-semibold tracking-wider uppercase">
                             <span>{lead.category}</span>
                             <span>•</span>
-                            <span>{lead.city}</span>
+                            <span>{lead.city}, {lead.country || 'India'}</span>
+                            {lead.leadCreatedBy && (
+                              <>
+                                <span>•</span>
+                                <span className="text-indigo-400/80">By: {lead.leadCreatedBy}</span>
+                              </>
+                            )}
                           </div>
                         </div>
 
@@ -881,13 +1275,13 @@ export default function App() {
                             <span className="font-extrabold text-xs text-slate-200 block">{lead.score}/100</span>
                             <span className={`text-[8px] font-bold uppercase tracking-widest ${
                               lead.priority === 'Hot' ? 'text-rose-400' : 
-                              lead.priority === 'Warm' ? 'text-amber-405 text-amber-400' : 'text-sky-400'
+                              lead.priority === 'Warm' ? 'text-amber-400' : 'text-sky-400'
                             }`}>
                               {lead.priority}
                             </span>
                           </div>
 
-                          <ChevronRight className="w-4 h-4 text-slate-650 text-slate-500" />
+                          <ChevronRight className="w-4 h-4 text-slate-500" />
                           
                           <button 
                             type="button" 
